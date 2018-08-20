@@ -32,7 +32,7 @@
 	      <th scope="row">{{ loop.index }}</th>
 	      <td>{{ film.title }}</td>
 	      <td>
-		<a href="" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Voire lesla fiche du films</a>
+		<a href="{{ path("videotech_film" , {'catName' :  film.category.name , 'filmName' : film.title, 'filmId' : film.id}) }}" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Voire lesla fiche du films</a>
 	      </td>
 	    </tr>
 	  {% endfor %}

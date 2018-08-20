@@ -5,6 +5,14 @@ videotech_homepage:
 videotech_new_film:
   path:    /add/film
   defaults: { _controller: VideotechBundle:FilmManager:createFilmPage }
+
+videotech_film:
+  path:    /{catName}/{filmName}-{filmId}
+  defaults: { _controller: VideotechBundle:FilmManager:displayFilmPage }
+
+videotech_update_film:
+  path:    /update/film/{Id}
+  defaults: { _controller: VideotechBundle:FilmManager:updateFilm }
   
 videotech_new_category:
   path:       /add/cat
