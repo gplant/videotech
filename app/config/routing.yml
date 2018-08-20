@@ -2,3 +2,9 @@ videotech:
     resource: "@VideotechBundle/Resources/config/routing.yml"
     prefix:   /
 
+# FOS User bundle routing
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+# app/config/routing.yml
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

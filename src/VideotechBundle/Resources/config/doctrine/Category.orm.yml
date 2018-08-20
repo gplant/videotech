@@ -1,0 +1,21 @@
+VideotechBundle\Entity\Category:
+    type: entity
+    table: null
+    repositoryClass: VideotechBundle\Repository\CategoryRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            unique: true
+    oneToMany:
+      films:
+        targetEntity: film
+        mappedBy: category
+        cascade: [ persist , remove ]
+    lifecycleCallbacks: {  }

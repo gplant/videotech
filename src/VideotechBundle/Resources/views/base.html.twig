@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<!-- Bootstrap -->
+	{% stylesheets 'bundles/videotech/bootstrap/css/bootstrap.min.css' 'bundles/videotech/bootstrap/css/bootstrap-theme.css' filter='cssrewrite' %}
+	    <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	    {% javascripts '@ie_js' %}
+            <script src="{{ asset_url }}"></script>
+	    {% endjavascripts %}
+	<![endif]-->
+	 
+	<title>{{ site_name }} - {% block title %}Welcome!{% endblock %}</title>
+    
+	{% block stylesheets %}{% endblock %}
+	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+	{% block body %}{% endblock %}
+	{% javascripts '@boostrap_js' 'bundles/fosjsrouting/js/router.js' %}
+	<script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+	<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+	{% block javascripts %}{% endblock %}
+    </body>
+    
+</html>

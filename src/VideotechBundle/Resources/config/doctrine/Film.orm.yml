@@ -1,0 +1,29 @@
+VideotechBundle\Entity\Film:
+    type: entity
+    table: null
+    repositoryClass: VideotechBundle\Repository\FilmRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+            column: Title
+        description:
+            type: text
+            column: Description
+        image:
+            type: string
+            length: 255
+    manyToOne:
+      category:
+        targetEntity: Category
+        inversedBy: films
+        joinColumn:
+          name: category_id
+          referencedColumnName: id
+    lifecycleCallbacks: {  }

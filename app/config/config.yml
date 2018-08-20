@@ -20,6 +20,8 @@ framework:
     csrf_protection: ~
     validation: { enable_annotations: true }
     #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
     default_locale: '%locale%'
     trusted_hosts: ~
     session:
@@ -36,6 +38,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+      site_name: 'Videoteque'
 
 # Doctrine Configuration
 doctrine:
@@ -70,3 +74,36 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
+
+# Assetic config
+assetic:
+  debug:          '%kernel.debug%'
+  use_controller: '%kernel.debug%'
+  filters:
+    cssrewrite: ~
+  assets:
+    ie_js:
+      inputs:
+        - '@VideotechBundle/Resources/public/js/html5shiv.min.js'
+        - '@VideotechBundle/Resources/public/js/respond.min.js'
+    boostrap_js:
+      inputs:
+        - '@VideotechBundle/Resources/public/js/jquery.min.js'
+        - '@VideotechBundle/Resources/public/bootstrap/js/bootstrap.min.js'
+
+        # fos User Bundle configuration
+fos_user:
+  db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+  firewall_name: main
+  user_class: VideotechBundle\Entity\User
+  from_email:
+    address: "videoteque@test.com"
+    sender_name: "video"
+
+# Vich file uploder bundle configuration 
+vich_uploader:
+  db_driver: orm # or mongodb or propel or phpcr
+  mappings:
+    product_image:
+      uri_prefix:         /images/film
+      upload_destination: '%kernel.project_dir%/web/images/film'

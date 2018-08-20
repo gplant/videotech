@@ -1,0 +1,11 @@
+VideotechBundle\Entity\User:
+    type: entity
+    table: fos_user
+    repositoryClass: VideotechBundle\Repository\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    lifecycleCallbacks: {  }

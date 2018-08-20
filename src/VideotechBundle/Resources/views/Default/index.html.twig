@@ -1,1 +1,9 @@
-Hello World!
+{% extends '@Videotech/Layout.html.twig' %}
+
+{% block title %} Welcom to  {% endblock %}
+
+{% block content %}
+    <div class="col-sm-12">
+	<h1>Welcome {{ app.user.username }}</h1>
+    </div>
+{% endblock %}

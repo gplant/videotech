@@ -1,0 +1,28 @@
+{% extends 'VideotechBundle::base.html.twig' %}
+
+{% block title %} {% endblock %}
+
+
+{% block body %}
+    <div class="container">
+	{% if app.request.hasPreviousSession %}
+	    {% for type, messages in app.session.flashbag.all() %}
+		{% for message in messages %}
+		    {% if type in ['success','info','warning','danger'] %}
+			<div class="alert alert-{{ type }}" role="alert">
+		    {% else %}
+			<div class="alert alert-warning" role="alert">
+		    {% endif %}
+		            {{ message }}
+			</div>	
+		{% endfor %}
+	    {% endfor %}
+	{% endif %}
+
+	<div>
+	    {% block fos_user_content %}
+	    {% endblock fos_user_content %}
+	</div>
+
+    </div>
+{% endblock %}
