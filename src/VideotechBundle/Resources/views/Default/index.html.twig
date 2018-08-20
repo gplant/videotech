@@ -4,6 +4,11 @@
 
 {% block content %}
     <div class="col-sm-12">
+     {% if app.user %}
 	<h1>Welcome {{ app.user.username }}</h1>
+ {% else %}
+    	<h1>Welcome inconue</h1>
+ {% endif %}
+
     </div>
 {% endblock %}

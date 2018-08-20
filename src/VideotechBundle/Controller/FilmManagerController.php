@@ -112,6 +112,22 @@ class FilmManagerController extends Controller
         // Execute pending DB operations
         $em->flush();
 
+	//Sending email to admin
+
+	$message = (new \Swift_Message('Hello Email'))
+       	->setFrom('send@example.com')
+        ->setTo('plantgeorge@gmail.com')
+        ->setBody(
+            $this->renderView(
+                '@Videotech/Emails/film.html.twig',
+                array('film' => $film,
+			     'type' => "Création")
+            ),
+            'text/html'
+        );
+	$this->get('mailer')->send($message);
+
+
        // redirect to the survey list route
         return $this->redirectToRoute('videotech_homepage');
     }
@@ -151,6 +167,20 @@ class FilmManagerController extends Controller
 
         // Execute pending DB operations
         $em->flush();
+
+	$message = (new \Swift_Message('Hello Email'))
+       	->setFrom('send@example.com')
+        ->setTo('plantgeorge@gmail.com')
+        ->setBody(
+            $this->renderView(
+                '@Videotech/Emails/film.html.twig',
+                array('film' => $film,
+			     'type' => "Créationmise à jours")
+            ),
+            'text/html'
+        );
+
+	$this->get('mailer')->send($message);
 
        // redirect to the survey list route
         return $this->redirectToRoute('videotech_homepage');
