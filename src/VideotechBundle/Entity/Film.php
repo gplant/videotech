@@ -1,14 +1,17 @@
 <?php
 
 namespace VideotechBundle\Entity;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
- * Film
+ * @Vich\Uploadable
  */
 class Film
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -23,15 +26,39 @@ class Film
     private $description;
 
     /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="film_image", fileNameProperty="imageName", size="imageSize")
+     * 
+     * @var File
+     */
+    private $imageFile;
+
+    /**
      * @var string
      */
-    private $image;
+    private $imageName;
+
+    /**
+     * @var integer
+     */
+    private $imageSize;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @var \VideotechBundle\Entity\Category
+     */
+    private $category;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -87,33 +114,102 @@ class Film
     }
 
     /**
-     * Set image
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
-     * @param string $image
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if (null !== $image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): File
+    {
+        return $this->imageFile;
+    }
+
+
+    /**
+     * Set imageName
+     *
+     * @param string $imageName
      *
      * @return Film
      */
-    public function setImage($image)
+    public function setImageName($imageName)
     {
-        $this->image = $image;
+        $this->imageName = $imageName;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get imageName
      *
      * @return string
      */
-    public function getImage()
+    public function getImageName()
     {
-        return $this->image;
+        return $this->imageName;
     }
-    /**
-     * @var \VideotechBundle\Entity\Category
-     */
-    private $category;
 
+    /**
+     * Set imageSize
+     *
+     * @param integer $imageSize
+     *
+     * @return Film
+     */
+    public function setImageSize($imageSize)
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    /**
+     * Get imageSize
+     *
+     * @return integer
+     */
+    public function getImageSize()
+    {
+        return $this->imageSize;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Film
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
 
     /**
      * Set category
@@ -138,4 +234,5 @@ class Film
     {
         return $this->category;
     }
+
 }

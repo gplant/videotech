@@ -16,9 +16,13 @@ VideotechBundle\Entity\Film:
         description:
             type: text
             column: Description
-        image:
+        imageName:
             type: string
             length: 255
+        imageSize:
+          type: integer
+        updatedAt:
+          type: datetime
     manyToOne:
       category:
         targetEntity: Category

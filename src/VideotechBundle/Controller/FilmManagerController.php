@@ -6,6 +6,9 @@ namespace VideotechBundle\Controller;
 // Symfony objects //
 // Base constroler
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 // JSON respons 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -14,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 // Enteties //
 use VideotechBundle\Entity\Category;
-
+use VideotechBundle\Entity\Film;
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,11 +43,13 @@ class FilmManagerController extends Controller
         // Retrive all exsisting categories
         $categories = $em->getRepository('VideotechBundle:Category')
                    ->findAll();
-
+        $nbFilm = count($em->getRepository('VideotechBundle:Film')
+                   ->findAll());
 
         // Render display
         return $this->render('@Videotech/Film/create_film.twig', array(
-            "categories" => $categories
+            "categories" => $categories,
+	    "nbFilm" => $nbFilm
         ));
     }
 
@@ -68,78 +73,44 @@ class FilmManagerController extends Controller
         ));
     }
 
-    /* Displays a list of all surveys */
-    public function manageSurveyPageAction()
-    {
-        // Get entity Manager
-        $em = $this->get('doctrine')->getManager();
-
-        // Retrive all exsisting surveys
-        $surveys = $em->getRepository('BigDataSurveyBundle:Survey')
-                   ->findAll();
-
-
-        // Render display
-        return $this->render('BigDataSurveyBundle:Admin:SurveyManager/list_survey.html.twig', array(
-            "surveys" => $surveys
-        ));
-    }
 
     // Create actions /////////////////////////////////////////////////////////
     
     /* create a new survey */
-    public function createSurveyAction()
+    public function createFilmAction()
     {
         // Get entity Manager
         $em = $this->get('doctrine')->getManager();
 
         //Create new survey
-        $survey = new Survey();
+        $film = new Film();
         
         // Retrive category
-        $category = $em->getRepository('BigDataSurveyBundle:Category')
+        $category = $em->getRepository('VideotechBundle:Category')
                    ->find($_POST['categorySelecter']);
 
         // Set main info
-        $survey->setName($_POST['name']);
-        $survey->setCategory($category);
+        $film->setTitle($_POST['title']);
+	$film->setDescription($_POST['description']);
+        $film->setCategory($category);
 
         // Upload file containing main code to survey
-        if (is_uploaded_file($_FILES['code']['tmp_name'])) {
-            $dataToSurvey = new DataToSurvey();
-            $dataCode = new DataCode();
-            $dataToSurvey->setType('code');
-            $dataCode->setCode(file_get_contents($_FILES['code']['tmp_name']));
-            $dataCode->setDataToSurvey($dataToSurvey);
-            $em->persist($dataCode);
-            $dataToSurvey->setTitle($_FILES['code']['name']);
-            $em->persist($dataToSurvey);
-            $survey->setMainDataToSurvey($dataToSurvey);
+        if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+	   $image = new UploadedFile($_FILES['image']['tmp_name'], $_FILES['image']['name']);
+           $film->setImageFile($image);
+	   $film->setImageName($_FILES['image']['name']);
+	   $film->setImageSize(filesize($_FILES['image']['tmp_name']));
         }
 
-        // For each annex file upload it
-        foreach ($_FILES['annexCode']['tmp_name'] as $key => $annexCodeFile) {
-            if (is_uploaded_file($annexCodeFile)) {
-                $dataToSurvey = new DataToSurvey();
-                $dataCode = new DataCode();
-                $dataToSurvey->setType('code');
-                $dataCode->setCode(file_get_contents($annexCodeFile));
-                $dataCode->setDataToSurvey($dataToSurvey);
-                $em->persist($dataCode);
-                $dataToSurvey->setTitle($_FILES['annexCode']['name'][$key]);
-                $em->persist($dataToSurvey);
-                $survey->addAnnexData($dataToSurvey);
-            }
-        }
 
         // alert doctrine to follow this object
-        $em->persist($survey);
+        $em->persist($film);
 
         // Execute pending DB operations
         $em->flush();
 
        // redirect to the survey list route
-        return $this->redirectToRoute('bds_admin_survey_list_page');
+        return $this->redirectToRoute('videotech_homepage');
     }
 
 
@@ -240,14 +211,66 @@ class FilmManagerController extends Controller
 
     
     ///////////////////////////////////////////////////////////////////////////
-    //                    Question & question type actions                   //
+    //                            Category actions                           //
     ///////////////////////////////////////////////////////////////////////////
 
+   // Display page Actions////////////////////////////////////////////////////
+    
+    /* Displays the Categories */
+    public function categoriesPageAction()
+    {
+        // Get entity Manager
+        $em = $this->get('doctrine')->getManager();
+
+        // Retrive all exsisting categories
+        $categories = $em->getRepository('VideotechBundle:Category')
+                   ->findAll();
+
+	$nbFilm = count($em->getRepository('VideotechBundle:Film')
+                   ->findAll());
+
+        // Render display
+        return $this->render('@Videotech/Category/list.twig', array(
+            "categories" => $categories,
+	    "nbFilm" => $nbFilm
+        ));
+    }
+
+
+
+    
+    /* Displays the Category */
+    public function categoryPageAction(Request $request, $name)
+    {
+        // Get entity Manager
+        $em = $this->get('doctrine')->getManager();
+
+        // Retrive all exsisting categories
+        $category = $em->getRepository('VideotechBundle:Category')
+                   ->findOneByName($name);
+
+	$films = $category->getFilms();
+
+
+    	$paginator  = $this->get('knp_paginator');
+    	$pagination = $paginator->paginate(
+        	    $films,
+		    $request->query->getInt('page', 1)/*page number*/
+		    );
+
+	$nbFilm = count($em->getRepository('VideotechBundle:Film')
+                   ->findAll());
+
+        // Render display
+        return $this->render('@Videotech/Category/listFilm.twig', array(
+	    "catName" => $name,
+            'pagination' => $pagination,
+	    "nbFilm" => $nbFilm
+        ));
+    }
 
     // Create actions ///////////////////////////////////////////////////////// 
 
-
-    // Save and update actions/////////////////////////////////////////////////
 
 
 

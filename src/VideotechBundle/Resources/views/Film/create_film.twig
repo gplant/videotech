@@ -11,7 +11,7 @@
 
     <!-- Main form : Creation of a new categorifilm -->
     
-    <form class="form-horizontal" action=""  method="post" enctype="multipart/form-data" id="mainForm">
+    <form class="form-horizontal" action="{{ path("videotech_create_film") }}"  method="post" enctype="multipart/form-data" id="mainForm">
 	<div class="form-group">
 	    <label for="title" class="col-sm-2 control-label">Titre : </label>
 	    <div class="col-sm-8">
@@ -19,9 +19,16 @@
 	    </div>
 	</div>
 	<div class="form-group">
-	    <label for="code" class="col-sm-2 control-label">Code to evaluate : </label>
+	  <label for="description" class="col-sm-2 control-label">Description : </label>
+	  <div class="col-sm-8">
+	    <textarea class="form-control" id="description" name="description" placeholder="Titre film" rows="3">
+	    </textarea>
+	  </div>
+	</div>
+	<div class="form-group">
+	    <label for="image" class="col-sm-2 control-label">Affiche : </label>
 	    <div class="col-sm-8">
-		<input type="file"  requiered="true" id="code" name="code">
+		<input type="file"  requiered="true" id="image" name="image">
 	    </div>
 	</div>
 

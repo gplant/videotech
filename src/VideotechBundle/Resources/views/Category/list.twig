@@ -1,0 +1,44 @@
+{# Load Admin layout #}
+{% extends "VideotechBundle::Layout.html.twig" %}
+
+{# Page sub title #}
+{% block subTitle %}Categorie{% endblock %}
+
+
+
+{# Main content block #}
+{% block content %}
+    <h1 class="page-header">List film Creation</h1>
+
+    <table class="table table-striped">
+      <thead>
+	<tr>
+	  <th scope="col">#</th>
+	  <th scope="col">Nom</th>
+	  <th scope="col">Nombre de film</th>
+	  <th scope="col"></th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for category in categories %}
+	<tr>
+	  <th scope="row">{{ loop.index }}</th>
+	  <td>{{ category.name }}</td>
+	  <td>{{ category.films.count }}</td>
+	  <td>
+	    <a href="{{ path('videotech_category', {'name': category.name}) }}" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Voire les films</a>
+	  </td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+
+    
+{% endblock %}
+
+{% block javascripts %}
+
+
+
+  
+{% endblock %}

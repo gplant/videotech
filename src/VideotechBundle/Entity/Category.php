@@ -8,7 +8,7 @@ namespace VideotechBundle\Entity;
 class Category
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -17,11 +17,23 @@ class Category
      */
     private $name;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $films;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->films = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -50,18 +62,6 @@ class Category
     public function getName()
     {
         return $this->name;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $films;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->films = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

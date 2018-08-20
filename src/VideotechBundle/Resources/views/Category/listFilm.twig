@@ -1,0 +1,56 @@
+{# Load Admin layout #}
+{% extends "VideotechBundle::Layout.html.twig" %}
+
+{# Page sub title #}
+{% block subTitle %}Categorie{% endblock %}
+
+
+
+{# Main content block #}
+{% block content %}
+    <h1 class="page-header">List film {{ catName }}</h1>
+
+
+
+    {# total items count #}
+ 
+
+
+      {# table body #}
+
+      <table class="table table-striped">
+	<thead>
+	  <tr>
+	    <th scope="col">#</th>
+	    <th scope="col">Titre</th>
+	    <th scope="col"></th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {% for film in pagination %}
+	    <tr>
+	      <th scope="row">{{ loop.index }}</th>
+	      <td>{{ film.title }}</td>
+	      <td>
+		<a href="" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Voire lesla fiche du films</a>
+	      </td>
+	    </tr>
+	  {% endfor %}
+	  
+	</tbody>
+      </table>
+
+
+      {# display navigation #}
+      <div class="navigation">
+	{{ knp_pagination_render(pagination) }}
+      </div>
+      
+{% endblock %}
+
+{% block javascripts %}
+
+
+
+  
+{% endblock %}

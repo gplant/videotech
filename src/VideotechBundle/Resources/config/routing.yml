@@ -9,3 +9,16 @@ videotech_new_film:
 videotech_new_category:
   path:       /add/cat
   defaults: { _controller: VideotechBundle:FilmManager:modalCreateCategory }
+
+videotech_create_film:
+  path:    /create/film
+  defaults: { _controller: VideotechBundle:FilmManager:createFilm }
+
+
+videotech_list_category:
+  path:       /categories
+  defaults: { _controller: VideotechBundle:FilmManager:categoriesPage }
+
+videotech_category:
+  path:       /category/{name}
+  defaults: { _controller: VideotechBundle:FilmManager:categoryPage }
