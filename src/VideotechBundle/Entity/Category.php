@@ -67,11 +67,11 @@ class Category
     /**
      * Add film
      *
-     * @param \VideotechBundle\Entity\Survey $film
+     * @param \VideotechBundle\Entity\Film $film
      *
      * @return Category
      */
-    public function addFilm(\VideotechBundle\Entity\Survey $film)
+    public function addFilm(\VideotechBundle\Entity\Film $film)
     {
         $this->films[] = $film;
 
@@ -81,9 +81,9 @@ class Category
     /**
      * Remove film
      *
-     * @param \VideotechBundle\Entity\Survey $film
+     * @param \VideotechBundle\Entity\Film $film
      */
-    public function removeFilm(\VideotechBundle\Entity\Survey $film)
+    public function removeFilm(\VideotechBundle\Entity\Film $film)
     {
         $this->films->removeElement($film);
     }

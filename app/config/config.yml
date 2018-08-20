@@ -78,7 +78,7 @@ sensio_framework_extra:
 # Assetic config
 assetic:
   debug:          '%kernel.debug%'
-  use_controller: '%kernel.debug%'
+  use_controller:  '%kernel.debug%'
   filters:
     cssrewrite: ~
   assets:
@@ -90,6 +90,7 @@ assetic:
       inputs:
         - '@VideotechBundle/Resources/public/js/jquery.min.js'
         - '@VideotechBundle/Resources/public/bootstrap/js/bootstrap.min.js'
+        - '@VideotechBundle/Resources/public/js/createFilm.js'
 
         # fos User Bundle configuration
 fos_user:

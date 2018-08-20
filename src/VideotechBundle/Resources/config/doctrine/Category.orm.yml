@@ -15,7 +15,7 @@ VideotechBundle\Entity\Category:
             unique: true
     oneToMany:
       films:
-        targetEntity: film
+        targetEntity: Film
         mappedBy: category
         cascade: [ persist , remove ]
     lifecycleCallbacks: {  }

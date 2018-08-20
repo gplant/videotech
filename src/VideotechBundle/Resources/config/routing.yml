@@ -1,3 +1,11 @@
 videotech_homepage:
     path:     /
     defaults: { _controller: VideotechBundle:Default:index }
+
+videotech_new_film:
+  path:    /add/film
+  defaults: { _controller: VideotechBundle:FilmManager:createFilmPage }
+  
+videotech_new_category:
+  path:       /add/cat
+  defaults: { _controller: VideotechBundle:FilmManager:modalCreateCategory }
