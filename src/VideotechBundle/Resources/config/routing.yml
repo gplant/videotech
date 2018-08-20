@@ -1,0 +1,3 @@
+videotech_homepage:
+    path:     /
+    defaults: { _controller: VideotechBundle:Default:index }
