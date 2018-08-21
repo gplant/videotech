@@ -1,12 +1,12 @@
 
-// If Create new question selected launch New Question modal
+// If Create new category selected launch New Category modal
 function verifyCategory(selectedObj){
   if(selectedObj.value == -2){
     $('#newCategoryModal').modal('show')
   }
 }
 
-
+// Cleanup Category modal on close
 function clearNewCategoryValues(){
   $("#categoryName").val("");
 }
@@ -28,7 +28,7 @@ function submitFormAndStay(formToSend){
 
 
 
-// Submits the New Type created in the type modal
+// Submits the New Category created in the type modal
 function submitNewCategory(){
 
     // Submit data
@@ -39,11 +39,11 @@ function submitNewCategory(){
       if(data.response == 'success'){
         // Type has been saved
 
-        // Add new typeQuestion to thr select list and selecte it
+        // Add new category to thr select list and selecte it
         $('#categorySelecter').append('<option value="' + data.data.id + '">' + data.data.text + '</option>');
         $('#categorySelecter').val(data.data.id);
 
-        //Clean up the type (this) modal
+        //Clean up the (this) modal
         clearNewCategoryValues();
         //close it !
         $('#newCategoryModal').modal('hide');
@@ -60,3 +60,43 @@ function submitNewCategory(){
   
 }
 
+
+// Validate New Film info
+
+function validateNewFilm(){
+
+  var err = false;
+
+  if($('#title').val().length < 10 || $('#title').val().length > 255) {
+    $('#title').addClass("is-invalid");
+    err = true;
+  } else {
+    $('#title').removeClass("is-invalid");
+  }
+
+  if(!$('#description').val()) {
+    $('#description').addClass("is-invalid");
+    err = true;
+  } else {
+    $('#description').removeClass("is-invalid");
+  }
+
+  if(!$('#image').val()) {
+    $('#image').addClass("is-invalid");
+    err = true;
+  } else {
+    $('#image').removeClass("is-invalid");
+  }
+
+  if($('#categorySelecter').val() <= 0 ) {
+    $('#categorySelecter').addClass("is-invalid");
+    err = true;
+  } else {
+    $('#categorySelecter').removeClass("is-invalid");
+  }
+
+
+
+  return !err;
+
+}
