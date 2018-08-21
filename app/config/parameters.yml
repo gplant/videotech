@@ -10,3 +10,4 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: videotech
+    videotech.adminEmail: plantgeorge@gmail.com
