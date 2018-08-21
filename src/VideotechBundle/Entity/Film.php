@@ -133,7 +133,7 @@ class Film
         }
     }
 
-    public function getImageFile(): File
+    public function getImageFile()
     {
         return $this->imageFile;
     }

@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+
 // JSON respons 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -216,7 +218,9 @@ class FilmManagerController extends Controller
            $film->setImageFile($image);
 	   $film->setImageName($_FILES['image']['name']);
 	   $film->setImageSize(filesize($_FILES['image']['tmp_name']));
-        }
+        } else {
+           $film->setImageFile($film->getImageFile());
+	}
 
 
         // alert doctrine to follow this object
@@ -233,7 +237,27 @@ class FilmManagerController extends Controller
     }
 
     // Delete actions /////////////////////////////////////////////////////////
+     public function deleteFilmAction($Id){
+             // Get entity Manager
+        $em = $this->get('doctrine')->getManager();
 
+        //get Film
+        $film = $em->getRepository('VideotechBundle:Film')
+                   ->findOneById($Id);
+        
+	$this->sendEmailToAdmin($film, "supprimé");
+
+        // alert doctrine to follow this object
+        $em->remove($film);
+
+        // Execute pending DB operations
+        $em->flush();
+
+
+       // redirect to the survey list route
+        return $this->redirectToRoute('videotech_homepage');
+        
+    }
     
 
     

@@ -17,6 +17,10 @@ videotech_search:
 videotech_update_film:
   path:    /admin/update/film/{Id}
   defaults: { _controller: VideotechBundle:FilmManager:updateFilm }
+
+videotech_delete_film:
+  path:    /admin/delete/film/{Id}
+  defaults: { _controller: VideotechBundle:FilmManager:deleteFilm }
   
 videotech_new_category:
   path:       /admin/add/cat

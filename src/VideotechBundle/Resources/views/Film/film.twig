@@ -7,11 +7,11 @@
 
 {# Main content block #}
 {% block content %}
-    <h1 class="page-header">Ajout film</h1>
+    <h1 class="page-header">film</h1>
 
     <!-- Main form : Creation of a new categorifilm -->
     
-    <form class="form-horizontal" action="{{ path("videotech_update_film" , { 'Id' : film.id} ) }}"  method="post" enctype="multipart/form-data" id="mainForm" onsubmit="return validateNewFilm();">
+    <form class="form-horizontal" action="{{ path("videotech_update_film" , { 'Id' : film.id} ) }}"  method="post" enctype="multipart/form-data" id="mainForm" onsubmit="return validateFilm();">
 	<div class="form-group">
 	    <label for="title" class="col-sm-2 control-label">Titre : </label>
 	    <div class="col-sm-8">
@@ -54,10 +54,13 @@
 	    </div>
 	</div>
     </form>
-    
+    <form class="form-horizontal" action="{{ path("videotech_delete_film" , { 'Id' : film.id} ) }}"  method="post" enctype="multipart/form-data" id="deleteForm">
+
+      </form>
 
     <div>
-	<button type="submit" form="mainForm" class="btn btn-primary" >Mettre à jour</button>
+      <button type="submit" form="mainForm" class="btn btn-primary" >Mettre à jour</button>
+      <button type="submit" form="deleteForm" class="btn btn-danger" >Supprimer</button>
     </div>
 
 
