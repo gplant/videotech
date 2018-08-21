@@ -26,9 +26,15 @@
             <a class="nav-link" href="{{ path("videotech_new_film") }}">Ajout film</a>
 	  </li>
 	</ul>
-	<span class="navbar-text">
+	<span class="navbar-text" style="padding-right:10px" >
 	  Nombre de film total :{{ nbFilm }} 
 	</span>
+
+
+    	<form class="form-inline my-2 my-lg-0" action="{{ path("videotech_search") }}"  method="post" enctype="multipart/form-data">
+      	      <input class="form-control mr-sm-2" type="search" placeholder="Recherche ..." aria-label="Search" id="search" name="search">
+      	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+    	</form>
       </div>
     </nav>
     

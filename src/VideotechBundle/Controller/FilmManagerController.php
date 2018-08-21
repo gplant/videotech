@@ -77,6 +77,36 @@ class FilmManagerController extends Controller
     }
 
 
+    /* Search a Film */
+    public function searchPageAction(){
+        // Get entity Manager
+        $em = $this->get('doctrine')->getManager();
+
+	$searchTxt = $_POST['search'];
+
+        $nbFilm = count($em->getRepository('VideotechBundle:Film')
+                   ->findAll());
+
+	$films = $em->createQuery('SELECT f FROM VideotechBundle:Film f
+	      				 WHERE f.title like :search')
+                   ->setParameter('search', '%' . $searchTxt . '%')
+		   ->execute();
+
+
+        $categories = $em->createQuery('SELECT c FROM VideotechBundle:Category c
+	      				 WHERE c.name like :search')
+                   ->setParameter('search', '%' . $searchTxt . '%')
+		   ->execute();
+
+        // Render display
+        return $this->render('@Videotech/Film/search.twig', array(
+            "films" => $films,
+	    "categories" => $categories,
+	    "nbFilm" => $nbFilm
+        ));
+    }
+
+
     // Create actions /////////////////////////////////////////////////////////
     
     /* create a new Film */
@@ -99,6 +129,7 @@ class FilmManagerController extends Controller
 
         // Upload file
         if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+
 	   $image = new UploadedFile($_FILES['image']['tmp_name'], $_FILES['image']['name']);
            $film->setImageFile($image);
 	   $film->setImageName($_FILES['image']['name']);

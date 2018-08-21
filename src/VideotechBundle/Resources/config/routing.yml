@@ -10,6 +10,10 @@ videotech_film:
   path:    /{catName}/{filmName}-{filmId}
   defaults: { _controller: VideotechBundle:FilmManager:displayFilmPage }
 
+videotech_search:
+  path:    /search
+  defaults: { _controller: VideotechBundle:FilmManager:searchPage }
+
 videotech_update_film:
   path:    /admin/update/film/{Id}
   defaults: { _controller: VideotechBundle:FilmManager:updateFilm }
