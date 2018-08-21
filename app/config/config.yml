@@ -90,7 +90,7 @@ assetic:
       inputs:
         - '@VideotechBundle/Resources/public/js/jquery.min.js'
         - '@VideotechBundle/Resources/public/bootstrap/js/bootstrap.min.js'
-        - '@VideotechBundle/Resources/public/js/createFilm.js'
+        - '@VideotechBundle/Resources/public/js/custom.js'
 
         # fos User Bundle configuration
 fos_user:
