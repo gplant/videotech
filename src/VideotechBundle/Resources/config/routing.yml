@@ -34,3 +34,8 @@ videotech_list_category:
 videotech_category:
   path:       /category/{name}
   defaults: { _controller: VideotechBundle:FilmManager:categoryPage }
+
+videotech_nb_film:
+  path:       /getNbFilm
+  defaults: { _controller: VideotechBundle:FilmManager:nbFilm }
+

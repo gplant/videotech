@@ -60,6 +60,38 @@ function submitNewCategory(){
   
 }
 
+//validate film
+function validateFilm(){
+
+  var err = false;
+
+  if($('#title').val().length < 10 || $('#title').val().length > 255) {
+    $('#title').addClass("is-invalid");
+    err = true;
+  } else {
+    $('#title').removeClass("is-invalid");
+  }
+
+  if(!$('#description').val()) {
+    $('#description').addClass("is-invalid");
+    err = true;
+  } else {
+    $('#description').removeClass("is-invalid");
+  }
+
+
+  if($('#categorySelecter').val() <= 0 ) {
+    $('#categorySelecter').addClass("is-invalid");
+    err = true;
+  } else {
+    $('#categorySelecter').removeClass("is-invalid");
+  }
+
+
+
+  return !err;
+
+}
 
 // Validate New Film info
 
@@ -100,3 +132,22 @@ function validateNewFilm(){
   return !err;
 
 }
+
+
+//fetch nb films
+
+$(document).ready(function()
+{
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/getNbFilm');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      var data = JSON.parse(xhr.responseText);
+    }
+    $('#totalFilm').text("Nombnre de film total : " + data.data.nbFilm);
+  };
+
+  xhr.send();
+
+});

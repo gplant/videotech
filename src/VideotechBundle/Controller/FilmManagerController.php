@@ -43,13 +43,10 @@ class FilmManagerController extends Controller
         // Retrive all exsisting categories
         $categories = $em->getRepository('VideotechBundle:Category')
                    ->findAll();
-        $nbFilm = count($em->getRepository('VideotechBundle:Film')
-                   ->findAll());
 
         // Render display
         return $this->render('@Videotech/Film/create_film.twig', array(
-            "categories" => $categories,
-	    "nbFilm" => $nbFilm
+            "categories" => $categories
         ));
     }
 
@@ -58,8 +55,6 @@ class FilmManagerController extends Controller
         // Get entity Manager
         $em = $this->get('doctrine')->getManager();
 
-        $nbFilm = count($em->getRepository('VideotechBundle:Film')
-                   ->findAll());
 
 	$film = $em->getRepository('VideotechBundle:Film')
                    ->findOneById($filmId);
@@ -71,8 +66,7 @@ class FilmManagerController extends Controller
         // Render display
         return $this->render('@Videotech/Film/film.twig', array(
             "film" => $film,
-	    "categories" => $categories,
-	    "nbFilm" => $nbFilm
+	    "categories" => $categories
         ));
     }
 
@@ -84,8 +78,6 @@ class FilmManagerController extends Controller
 
 	$searchTxt = $_POST['search'];
 
-        $nbFilm = count($em->getRepository('VideotechBundle:Film')
-                   ->findAll());
 
 	$films = $em->createQuery('SELECT f FROM VideotechBundle:Film f
 	      				 WHERE f.title like :search')
@@ -101,8 +93,7 @@ class FilmManagerController extends Controller
         // Render display
         return $this->render('@Videotech/Film/search.twig', array(
             "films" => $films,
-	    "categories" => $categories,
-	    "nbFilm" => $nbFilm
+	    "categories" => $categories
         ));
     }
 
@@ -161,6 +152,30 @@ class FilmManagerController extends Controller
 
        // redirect to the survey list route
         return $this->redirectToRoute('videotech_homepage');
+    }
+
+    /* Get total number of films 
+     * it will send back a JSON
+     */
+    public function nbFilmAction()
+    {
+
+        // Get entity Manager
+        $em = $this->get('doctrine')->getManager();
+
+ 	$nbFilm = count($em->getRepository('VideotechBundle:Film')
+                   ->findAll());
+		   
+        // Success response info
+        $responseArray = array(
+            'response' => 'success',
+            'data' => array(
+                'nbFilm' => $nbFilm
+            )
+        );
+
+        // Render a respons containing JSON data (not HTML or anything else=
+        return new JsonResponse($responseArray);
     }
 
 
@@ -271,14 +286,10 @@ class FilmManagerController extends Controller
 		    $request->query->getInt('page', 1)/*page number*/
 		    );
 
-	$nbFilm = count($em->getRepository('VideotechBundle:Film')
-                   ->findAll());
-
         // Render display
         return $this->render('@Videotech/Category/listFilm.twig', array(
 	    "catName" => $name,
-            'pagination' => $pagination,
-	    "nbFilm" => $nbFilm
+            'pagination' => $pagination
         ));
     }
 
